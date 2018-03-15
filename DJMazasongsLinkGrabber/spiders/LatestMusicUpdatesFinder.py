@@ -149,10 +149,13 @@ class LatestMusicUpdatesFinder(scrapy.Spider):
         self.request = Request(link, headers=self.headers)
         file_sizze = self.get_size(link)
         if file_sizze <= 1000:
-            print("inside if")
+            print("Unknown size of file. Skipping.........")
             self.log_fo.write("File Name: " + filename + '\n')
             self.log_fo.write("Fetched URL: " + link + '\n')
             self.log_fo.write("Received file size: " + str(file_sizze) + '\n')
+            print("File size: {} MB (0 means unknown)".format(
+                str(file_sizze / 10.0 ** 6)[:5]))
+            return
         print("File size: {} MB (0 means unknown)".format(
             str(file_sizze / 10.0 ** 6)[:5]))
         print("Downloading..." + filename)
