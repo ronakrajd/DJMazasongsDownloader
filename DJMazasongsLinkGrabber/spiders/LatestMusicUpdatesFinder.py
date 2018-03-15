@@ -48,6 +48,16 @@ class LatestMusicUpdatesFinder(scrapy.Spider):
                     self.base_url + update.xpath('.//@href').extract_first())
                 # print(self.base_url + update.xpath('.//@href').extract_first())
                 i = i + 1
+        # print(response.xpath('//div[@class="home-slider-body"]/figure'))
+        for update_tags in response.xpath('//div[@class="home-slider-body"]/figure'):
+            for update in update_tags.xpath('.//h3/a'):
+                # print(update)
+                print(i.__str__() + ". " +
+                      update.xpath('.//text()').extract_first().strip())
+                self.updates_links.append(
+                    self.base_url + update.xpath('.//@href').extract_first())
+                # print(self.base_url + update.xpath('.//@href').extract_first())
+                i = i + 1
 
         self.updates_choice = int(
             input("Enter Update number to download:")) - 1
@@ -113,10 +123,15 @@ class LatestMusicUpdatesFinder(scrapy.Spider):
         # 	  self.song_choice_list = choice_string.split()
         self.song_choice_list = [int(x) for x in input("Select song to download: ").split()]
         for song_choice in self.song_choice_list:
-            print(self.tracks_320_links[song_choice-1])
-            url = unquote(self.tracks_320_links[song_choice-1])
-            file_name = url.split('/')[-1]
-            self.downloadFile(self.tracks_320_links[song_choice-1], file_name)
+            # print(self.tracks_320_links[song_choice-1])
+            if self.tracks_320_links[song_choice-1] is None:
+                url = unquote(self.tracks_190_links[song_choice - 1])
+                file_name = url.split('/')[-1]
+                self.downloadFile(self.tracks_190_links[song_choice - 1], file_name)
+            else:
+                url = unquote(self.tracks_320_links[song_choice-1])
+                file_name = url.split('/')[-1]
+                self.downloadFile(self.tracks_320_links[song_choice-1], file_name)
 
     def check_and_create_album(self, album_name):
         new_dir = self.base_dir + album_name
