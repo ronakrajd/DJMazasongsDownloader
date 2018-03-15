@@ -18,8 +18,8 @@
       <file leaf-file-name="LatestMusicUpdatesFinder.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/DJMazasongsLinkGrabber/spiders/LatestMusicUpdatesFinder.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="480">
-              <caret line="133" column="16" lean-forward="false" selection-start-line="133" selection-start-column="16" selection-end-line="133" selection-end-column="16" />
+            <state relative-caret-position="314">
+              <caret line="154" column="70" lean-forward="false" selection-start-line="154" selection-start-column="70" selection-end-line="154" selection-end-column="70" />
               <folding>
                 <element signature="e#0#13#0" expanded="true" />
               </folding>
@@ -358,7 +358,7 @@
     <servers />
   </component>
   <component name="ToolWindowManager">
-    <frame x="-8" y="-8" width="1382" height="744" extended-state="0" />
+    <frame x="-8" y="-8" width="1382" height="744" extended-state="6" />
     <editor active="true" />
     <layout>
       <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25036603" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
@@ -463,8 +463,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/DJMazasongsLinkGrabber/spiders/LatestMusicUpdatesFinder.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="480">
-          <caret line="133" column="16" lean-forward="false" selection-start-line="133" selection-start-column="16" selection-end-line="133" selection-end-column="16" />
+        <state relative-caret-position="314">
+          <caret line="154" column="70" lean-forward="false" selection-start-line="154" selection-start-column="70" selection-end-line="154" selection-end-column="70" />
           <folding>
             <element signature="e#0#13#0" expanded="true" />
           </folding>

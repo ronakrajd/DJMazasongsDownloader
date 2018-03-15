@@ -25,6 +25,7 @@ class LatestMusicUpdatesFinder(scrapy.Spider):
     song_choice = 0
     download_links = list()
     base_dir = "C:/Users/rrdoo/Music/Bollywood/"
+    log_fo = open("Failed Files.log", "a")
 
     def reporthook(self, count, block_size, total_size):
         global start_time
@@ -146,8 +147,14 @@ class LatestMusicUpdatesFinder(scrapy.Spider):
             filename = "temp.mp3"
         # print(link)
         self.request = Request(link, headers=self.headers)
+        file_sizze = self.get_size(link)
+        if file_sizze <= 1000:
+            print("inside if")
+            self.log_fo.write("File Name: " + filename + '\n')
+            self.log_fo.write("Fetched URL: " + link + '\n')
+            self.log_fo.write("Received file size: " + str(file_sizze) + '\n')
         print("File size: {} MB (0 means unknown)".format(
-            str(self.get_size(link) / 10.0 ** 6)[:5]))
+            str(file_sizze / 10.0 ** 6)[:5]))
         print("Downloading..." + filename)
         try:
             opener = urllib.request.build_opener()
