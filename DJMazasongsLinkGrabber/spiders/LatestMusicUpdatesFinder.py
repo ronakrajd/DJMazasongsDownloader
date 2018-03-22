@@ -58,7 +58,7 @@ class LatestMusicUpdatesFinder(scrapy.Spider):
                 i = i + 1
 
         self.updates_choice = int(
-            input("Enter Update number to download:")) - 1
+            input("Enter Update number to download:")) - 2
         request = scrapy.Request(
             self.updates_links[self.updates_choice],
             callback=self.parseDownloadPage)
