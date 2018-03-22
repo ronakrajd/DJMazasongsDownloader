@@ -7,6 +7,8 @@ import os
 from scrapy.crawler import CrawlerProcess
 import sys
 import time
+from mutagen.mp3 import MP3
+from mutagen.id3 import ID3, APIC, error
 
 class LatestMusicUpdatesFinder(scrapy.Spider):
     start_urls = ['http://www.djmaza.fun']
@@ -26,27 +28,22 @@ class LatestMusicUpdatesFinder(scrapy.Spider):
     download_links = list()
     base_dir = "C:/Users/rrdoo/Music/Bollywood/"
     log_fo = open("Failed Files.log", "a")
-
-    def reporthook(self, count, block_size, total_size):
-        global start_time
-        if count == 0:
-            start_time = time.time()
-            return
-        duration = (time.time() - start_time) or 0.01
-        progress_size = int(count * block_size)
-        speed = int(progress_size / (1024 * duration))
-        percent = min(int(count * block_size * 100 / total_size), 100)
-        sys.stdout.write("\r...%d%%, %d MB, %d KB/s, %d seconds passed" % (percent, progress_size / (1024 * 1024), speed, duration))
-        sys.stdout.flush()
+    opener = urllib.request.build_opener()
+    opener.addheaders = [(
+        'User-Agent',
+        'Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/36.0.1941.0 Safari/537.36'
+    )]
+    urllib.request.install_opener(opener)
 
     def parse(self, response):
+        print("1. Bollywood Albums Links Load")
+        self.main_response = response
         for update_tags in response.xpath('//div[@class="home-trend-body"]'):
-            i = 1
+            i = 2
             for update in update_tags.xpath('.//a'):
                 print(i.__str__() + ". " +
                       update.xpath('.//text()').extract_first().strip())
-                self.updates_links.append(
-                    self.base_url + update.xpath('.//@href').extract_first())
+                self.updates_links.append(self.base_url + update.xpath('.//@href').extract_first())
                 # print(self.base_url + update.xpath('.//@href').extract_first())
                 i = i + 1
         # print(response.xpath('//div[@class="home-slider-body"]/figure'))
@@ -80,15 +77,23 @@ class LatestMusicUpdatesFinder(scrapy.Spider):
                     .extract_first().strip() == 'About Album'):
             print("Update found to be Album")
             self.parseDownloadPageForAlbum(response)
+        choice = input("Want to go to main screen(Y/N): ")
+        if choice == 'y' or choice == 'Y':
+            print("choice entered: " + choice)
+            self.parse(self.main_response)
 
     def parseDownloadPageForSingle(self, response):
         i = 1
-        # file_name = response.xpath('//div[@class="page-down-header bg-grey-full"]/h3/text()').extract_first().strip().split(':')[0]
+        file_name = response.xpath('//div[@class="page-down-header bg-grey-full"]/h3/text()').extract_first().strip().split(':')[0]
         # print(file_name)
         songMetaTags = response.xpath('//div[@class="page-meta-body"]/ul/li')
+        album_name = "Unclassified"
         # print(songMetaTags[3])
-        album_name = songMetaTags[3].xpath(
+        try:
+            album_name = songMetaTags[3].xpath(
             './/div/a/text()').extract_first().strip()
+        except IndexError:
+            self.log_fo.write("Cannot Find Album name for :" + file_name)
         for downloadLinkTags in response.xpath(
                 '//div[@class="col-xs-6 text-center page-down-btns"]'):
             print(i.__str__() + ". " + ''.join(
@@ -118,7 +123,7 @@ class LatestMusicUpdatesFinder(scrapy.Spider):
                 self.tracks_320_links.append(track.xpath('.//div/div[2]/a[3]/@href').extract_first())
                 # 			  print(track.xpath('.//div/div[2]/a[3]/@href').extract_first())
                 i = i + 1
-        self.check_and_create_album(album_name.strip())
+        self.check_and_create_album(album_name.strip(), self.base_url + response.xpath('//div[@class="col-sm-5 cover-section"]/img/@src').extract_first())
         # 	  choice_string = input("Select song to download: ")
         # 	  print(choice_string)
         # 	  self.song_choice_list = choice_string.split()
@@ -134,13 +139,18 @@ class LatestMusicUpdatesFinder(scrapy.Spider):
                 file_name = url.split('/')[-1]
                 self.downloadFile(self.tracks_320_links[song_choice-1], file_name)
 
-    def check_and_create_album(self, album_name):
+    def check_and_create_album(self, album_name, cover_image_link):
         new_dir = self.base_dir + album_name
         if os.path.exists(new_dir):
             self.base_dir = new_dir + '/'
         else:
             os.makedirs(new_dir)
             self.base_dir = new_dir + '/'
+        if os.path.isfile(self.base_dir + 'cover.jpg') is False:
+            try:
+                urlretrieve(cover_image_link, self.base_dir + 'cover.jpg', self.reporthook)
+            except:
+                print("Couldn't download cover image......")
 
     def downloadFile(self, link, filename):
         if filename == "":
@@ -160,15 +170,27 @@ class LatestMusicUpdatesFinder(scrapy.Spider):
             str(file_sizze / 10.0 ** 6)[:5]))
         print("Downloading..." + filename)
         try:
-            opener = urllib.request.build_opener()
-            opener.addheaders = [(
-                'User-Agent',
-                'Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/36.0.1941.0 Safari/537.36'
-            )]
-            urllib.request.install_opener(opener)
             urlretrieve(link, self.base_dir + filename, self.reporthook)
         except:
             print("404: Couldn't download file")
+
+        with open(self.base_dir + 'cover.jpg', 'rb') as f:
+            img_data = f.read()
+        mp3_file = MP3(self.base_dir + filename, ID3=ID3)
+        try:
+            mp3_file.add_tags()
+        except:
+            pass
+        mp3_file.tags.add(
+            APIC(
+                encoding=1,
+                mime='image/png',
+                type=3,
+                desc=u'Cover',
+                data=img_data
+            )
+        )
+        mp3_file.save()
         print("Done!")
 
     def get_size(self, link):
@@ -179,6 +201,18 @@ class LatestMusicUpdatesFinder(scrapy.Spider):
         except:
             return 0
 
+    def reporthook(self, count, block_size, total_size):
+        global start_time
+        if count == 0:
+            start_time = time.time()
+            return
+        duration = (time.time() - start_time) or 0.01
+        progress_size = int(count * block_size)
+        speed = int(progress_size / (1024 * duration))
+        percent = min(int(count * block_size * 100 / total_size), 100)
+        sys.stdout.write("\r...%d%%, %d MB, %d KB/s, %d seconds passed" % (
+        percent, progress_size / (1024 * 1024), speed, duration))
+        sys.stdout.flush()
 
 # process = CrawlerProcess({
 #     'USER_AGENT':

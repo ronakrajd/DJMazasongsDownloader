@@ -13,7 +13,11 @@ BOT_NAME = 'DJMazasongsLinkGrabber'
 
 SPIDER_MODULES = ['DJMazasongsLinkGrabber.spiders']
 NEWSPIDER_MODULE = 'DJMazasongsLinkGrabber.spiders'
-LOG_ENABLED = False
+LOG_ENABLED = True
+AUTOTHROTTLE_ENABLED = True
+AUTOTHROTTLE_START_DELAY = 0.50
+AUTOTHROTTLE_MAX_DELAY = 2
+
 
 # Crawl responsibly by identifying yourself (and your website) on the user-agent
 #USER_AGENT = 'DJMazasongsLinkGrabber (+http://www.yourdomain.com)'
