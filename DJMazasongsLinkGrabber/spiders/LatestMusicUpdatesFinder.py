@@ -13,6 +13,7 @@ from mutagen.id3 import ID3, APIC, error
 class LatestMusicUpdatesFinder(scrapy.Spider):
     start_urls = ['http://www.djmaza.fun']
     base_url = "http://www.djmaza.fun"
+    boll_albums_base_url = "https://www.djmaza.info/category/bollywood-albums/"
     name = "LatestMusicUpdatesFinder"
     headers = {
         'User-Agent':
@@ -25,6 +26,7 @@ class LatestMusicUpdatesFinder(scrapy.Spider):
     updates_choice = 0
     download_choice = 0
     song_choice = 0
+    curr_char = 'a'
     download_links = list()
     base_dir = "C:/Users/rrdoo/Music/Bollywood/"
     log_fo = open("Failed Files.log", "a")
@@ -36,7 +38,6 @@ class LatestMusicUpdatesFinder(scrapy.Spider):
     urllib.request.install_opener(opener)
 
     def parse(self, response):
-        print("1. Bollywood Albums Links Load")
         self.main_response = response
         for update_tags in response.xpath('//div[@class="home-trend-body"]'):
             i = 2
@@ -56,13 +57,19 @@ class LatestMusicUpdatesFinder(scrapy.Spider):
                     self.base_url + update.xpath('.//@href').extract_first())
                 # print(self.base_url + update.xpath('.//@href').extract_first())
                 i = i + 1
-
+        print(i.__str__() + ". " + "Bollywood Albums Links Load")
         self.updates_choice = int(
-            input("Enter Update number to download:")) - 2
-        request = scrapy.Request(
-            self.updates_links[self.updates_choice],
-            callback=self.parseDownloadPage)
-        yield request
+            input("Enter Update number to download:")) - 1
+        if self.updates_choice == i-1:
+            request = scrapy.Request(
+                self.boll_albums_base_url + 'a',
+                callback=self.parseBollywoodAlbumPages)
+            yield request
+        else:
+            request = scrapy.Request(
+                self.updates_links[self.updates_choice],
+                callback=self.parseDownloadPage)
+            yield request
 
     def parseDownloadPage(self, response):
         print(response.xpath('//div[@class="page-meta-header bg-grey-full"]/h3/text()').extract_first().strip())
@@ -195,7 +202,6 @@ class LatestMusicUpdatesFinder(scrapy.Spider):
 
     def get_size(self, link):
         try:
-
             print(urlopen(self.request).headers.get("Content-Length"))
             return int(urlopen(self.request).headers.get("Content-Length"))
         except:
@@ -213,6 +219,28 @@ class LatestMusicUpdatesFinder(scrapy.Spider):
         sys.stdout.write("\r...%d%%, %d MB, %d KB/s, %d seconds passed" % (
         percent, progress_size / (1024 * 1024), speed, duration))
         sys.stdout.flush()
+
+    def parseBollywoodAlbumPages(self, response):
+        list_pages = response.xpath('//ul[@class="pagination"]/li').extract()
+        total_pages = len(list_pages) - 1
+        print("Total Pages: " + total_pages.__str__())
+        i = 1
+        while i <= total_pages:
+            request = scrapy.Request(
+                self.boll_albums_base_url + self.curr_char + "?page=" + i.__str__(),
+                callback=self.parseAlbumListPage)
+            yield request
+            i = i + 1
+        self.curr_char = chr(ord(self.curr_char) + 1)
+        if self.curr_char != 'z':
+            request = scrapy.Request(
+                self.boll_albums_base_url + self.curr_char,
+                callback=self.parseBollywoodAlbumPages)
+            yield request
+
+    def parseAlbumListPage(self, response):
+        pass
+
 
 # process = CrawlerProcess({
 #     'USER_AGENT':
