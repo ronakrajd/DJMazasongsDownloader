@@ -30,6 +30,7 @@ class LatestMusicUpdatesFinder(scrapy.Spider):
     download_links = list()
     base_dir = "C:/Users/rrdoo/Music/Bollywood/"
     log_fo = open("Failed Files.log", "a")
+    available_albums_fo = open("AvailableAlbums.log", "w")
     opener = urllib.request.build_opener()
     opener.addheaders = [(
         'User-Agent',
@@ -40,7 +41,7 @@ class LatestMusicUpdatesFinder(scrapy.Spider):
     def parse(self, response):
         self.main_response = response
         for update_tags in response.xpath('//div[@class="home-trend-body"]'):
-            i = 2
+            i = 1
             for update in update_tags.xpath('.//a'):
                 print(i.__str__() + ". " +
                       update.xpath('.//text()').extract_first().strip())
@@ -223,12 +224,14 @@ class LatestMusicUpdatesFinder(scrapy.Spider):
     def parseBollywoodAlbumPages(self, response):
         list_pages = response.xpath('//ul[@class="pagination"]/li').extract()
         total_pages = len(list_pages) - 1
-        print("Total Pages: " + total_pages.__str__())
+        # print("Total Pages: " + total_pages.__str__())
         i = 1
+        if total_pages == -1:
+            self.parseArchivePage(response)
         while i <= total_pages:
             request = scrapy.Request(
                 self.boll_albums_base_url + self.curr_char + "?page=" + i.__str__(),
-                callback=self.parseAlbumListPage)
+                callback=self.parseArchivePage)
             yield request
             i = i + 1
         self.curr_char = chr(ord(self.curr_char) + 1)
@@ -238,8 +241,12 @@ class LatestMusicUpdatesFinder(scrapy.Spider):
                 callback=self.parseBollywoodAlbumPages)
             yield request
 
-    def parseAlbumListPage(self, response):
-        pass
+    def parseArchivePage(self, response):
+        # print(response.xpath('//div[@class="archive-body"]/figure').extract())
+        for album in response.xpath('//div[@class="archive-body"]/figure'):
+            print((album.xpath(".//h3/a/text()").extract_first()).strip())
+            self.available_albums_fo.write((album.xpath(".//h3/a/text()").extract_first()).strip() + "\n")
+
 
 
 # process = CrawlerProcess({

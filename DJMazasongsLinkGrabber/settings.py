@@ -13,7 +13,7 @@ BOT_NAME = 'DJMazasongsLinkGrabber'
 
 SPIDER_MODULES = ['DJMazasongsLinkGrabber.spiders']
 NEWSPIDER_MODULE = 'DJMazasongsLinkGrabber.spiders'
-LOG_ENABLED = True
+LOG_ENABLED = False
 AUTOTHROTTLE_ENABLED = True
 AUTOTHROTTLE_START_DELAY = 0.50
 AUTOTHROTTLE_MAX_DELAY = 2
