@@ -13,7 +13,9 @@ class ParseAlbum:
     # cred = credentials.Certificate(os.getcwd() + "\\serviceAccountKey.json")
     # firebase_admin.initialize_app(cred)
     PROJECT_ROOT = os.path.abspath(os.path.dirname(__file__))
-    info = json.loads({
+    # info = json.loads(json.dumps())
+    # credential = service_account.Credentials.from_service_account_info(info)
+    cred = credentials.Certificate({
   "type": "service_account",
   "project_id": "songslibrary-b17ec",
   "private_key_id": "04c0dc22c120ec95aa45a240950c09ded8bf02ad",
@@ -25,9 +27,8 @@ class ParseAlbum:
   "auth_provider_x509_cert_url": "https://www.googleapis.com/oauth2/v1/certs",
   "client_x509_cert_url": "https://www.googleapis.com/robot/v1/metadata/x509/firebase-adminsdk-js0nh%40songslibrary-b17ec.iam.gserviceaccount.com"
 })
-    cred = service_account.Credentials.from_service_account_info(info)
     firebase_admin.initialize_app(cred)
-    os.environ['GOOGLE_APPLICATION_CREDENTIALS'] = os.getcwd()
+    # os.environ['GOOGLE_APPLICATION_CREDENTIALS'] = os.getcwd()
     db = firestore.Client()
     db_doc = "temp"
     batch = db.batch()
