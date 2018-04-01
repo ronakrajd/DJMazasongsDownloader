@@ -28,7 +28,7 @@ class ParseAlbum:
   "client_x509_cert_url": "https://www.googleapis.com/robot/v1/metadata/x509/firebase-adminsdk-js0nh%40songslibrary-b17ec.iam.gserviceaccount.com"
 })
     firebase_admin.initialize_app(cred)
-    # os.environ['GOOGLE_APPLICATION_CREDENTIALS'] = os.getcwd()
+    os.environ['GOOGLE_APPLICATION_CREDENTIALS'] = os.getcwd()
     db = firestore.Client()
     db_doc = "temp"
     batch = db.batch()
