@@ -59,23 +59,21 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="LatestMusicUpdatesFinder.py" pinned="false" current-in-tab="false">
+      <file leaf-file-name="LatestMusicUpdatesFinder.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/DJMazasongsLinkGrabber/spiders/LatestMusicUpdatesFinder.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="399">
-              <caret line="48" column="25" lean-forward="true" selection-start-line="48" selection-start-column="4" selection-end-line="48" selection-end-column="25" />
-              <folding>
-                <element signature="e#0#13#0" expanded="true" />
-              </folding>
+            <state relative-caret-position="84">
+              <caret line="4" column="32" lean-forward="true" selection-start-line="4" selection-start-column="32" selection-end-line="4" selection-end-column="32" />
+              <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="ScrapeDJMazaMusicUpdates.py" pinned="false" current-in-tab="true">
+      <file leaf-file-name="ScrapeDJMazaMusicUpdates.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/DJMazasongsLinkGrabber/spiders/ScrapeDJMazaMusicUpdates.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="480">
-              <caret line="36" column="54" lean-forward="false" selection-start-line="36" selection-start-column="54" selection-end-line="36" selection-end-column="54" />
+            <state relative-caret-position="400">
+              <caret line="32" column="12" lean-forward="false" selection-start-line="32" selection-start-column="12" selection-end-line="32" selection-end-column="12" />
               <folding>
                 <element signature="e#0#13#0" expanded="true" />
               </folding>
@@ -119,6 +117,7 @@
       <find>boll_albums_base_url</find>
       <find>temp</find>
       <find>response.requ</find>
+      <find>urlretr</find>
     </findStrings>
     <replaceStrings>
       <replace>@href</replace>
@@ -135,9 +134,9 @@
         <option value="$PROJECT_DIR$/DJMazasongsLinkGrabber/settings.py" />
         <option value="$PROJECT_DIR$/DJMazasongsLinkGrabber/spiders/__init__.py" />
         <option value="$PROJECT_DIR$/DJMazasongsLinkGrabber/spiders/ParseAlbum.py" />
-        <option value="$PROJECT_DIR$/DJMazasongsLinkGrabber/spiders/LatestMusicUpdatesFinder.py" />
         <option value="$PROJECT_DIR$/DJMazasongsLinkGrabber/spiders/ParseSingles.py" />
         <option value="$PROJECT_DIR$/DJMazasongsLinkGrabber/spiders/ScrapeDJMazaMusicUpdates.py" />
+        <option value="$PROJECT_DIR$/DJMazasongsLinkGrabber/spiders/LatestMusicUpdatesFinder.py" />
       </list>
     </option>
   </component>
@@ -497,9 +496,7 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
           <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding>
-            <element signature="e#0#13#0" expanded="true" />
-          </folding>
+          <folding />
         </state>
       </provider>
     </entry>
@@ -525,9 +522,7 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
           <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding>
-            <element signature="e#0#13#0" expanded="true" />
-          </folding>
+          <folding />
         </state>
       </provider>
     </entry>
@@ -560,9 +555,7 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
           <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding>
-            <element signature="e#0#13#0" expanded="true" />
-          </folding>
+          <folding />
         </state>
       </provider>
     </entry>
@@ -588,9 +581,7 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
           <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding>
-            <element signature="e#0#13#0" expanded="true" />
-          </folding>
+          <folding />
         </state>
       </provider>
     </entry>
@@ -598,9 +589,7 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
           <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding>
-            <element signature="e#0#13#0" expanded="true" />
-          </folding>
+          <folding />
         </state>
       </provider>
     </entry>
@@ -608,9 +597,7 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
           <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding>
-            <element signature="e#0#13#0" expanded="true" />
-          </folding>
+          <folding />
         </state>
       </provider>
     </entry>
@@ -618,9 +605,7 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
           <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding>
-            <element signature="e#0#13#0" expanded="true" />
-          </folding>
+          <folding />
         </state>
       </provider>
     </entry>
@@ -628,9 +613,7 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
           <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding>
-            <element signature="e#0#13#0" expanded="true" />
-          </folding>
+          <folding />
         </state>
       </provider>
     </entry>
@@ -684,16 +667,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/DJMazasongsLinkGrabber/spiders/LatestMusicUpdatesFinder.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="399">
-          <caret line="48" column="25" lean-forward="true" selection-start-line="48" selection-start-column="4" selection-end-line="48" selection-end-column="25" />
-          <folding>
-            <element signature="e#0#13#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/DJMazasongsLinkGrabber/spiders/ParseSingles.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="260">
@@ -706,11 +679,19 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/DJMazasongsLinkGrabber/spiders/ScrapeDJMazaMusicUpdates.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="480">
-          <caret line="36" column="54" lean-forward="false" selection-start-line="36" selection-start-column="54" selection-end-line="36" selection-end-column="54" />
+        <state relative-caret-position="400">
+          <caret line="32" column="12" lean-forward="false" selection-start-line="32" selection-start-column="12" selection-end-line="32" selection-end-column="12" />
           <folding>
             <element signature="e#0#13#0" expanded="true" />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/DJMazasongsLinkGrabber/spiders/LatestMusicUpdatesFinder.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="84">
+          <caret line="4" column="32" lean-forward="true" selection-start-line="4" selection-start-column="32" selection-end-line="4" selection-end-column="32" />
+          <folding />
         </state>
       </provider>
     </entry>
