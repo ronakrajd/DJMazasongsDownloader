@@ -7,6 +7,7 @@ from google.cloud import firestore
 import os
 import json
 from google.oauth2 import service_account
+import pkgutil
 
 
 class ParseAlbum:

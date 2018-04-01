@@ -1,3 +1,5 @@
+from setuptools import setup, find_packages
+
 setup(
     name='DJMazasongsLinkGrabber',
     version='1.0',
