@@ -18,6 +18,7 @@ AUTOTHROTTLE_ENABLED = True
 AUTOTHROTTLE_START_DELAY = 0.50
 AUTOTHROTTLE_MAX_DELAY = 2
 CONCURRENT_REQUEST = 1
+DUPEFILTER_CLASS = 'scrapy.dupefilters.BaseDupeFilter'
 
 
 # Crawl responsibly by identifying yourself (and your website) on the user-agent

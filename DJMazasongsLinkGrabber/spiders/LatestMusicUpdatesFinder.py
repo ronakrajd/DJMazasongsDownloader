@@ -19,7 +19,8 @@ class LatestMusicUpdatesFinder(scrapy.Spider):
     db = firestore.Client()
     start_urls = ['http://www.djmaza.fun']
     base_url = "http://www.djmaza.fun"
-    boll_albums_base_url = "https://www.djmaza.fun/category/bollywood-albums/"
+    albums_base_url = "https://www.djmaza.fun/category/bollywood-albums/"
+    # punjabi_albums_base_url = ""
     name = "LatestMusicUpdatesFinder"
     headers = {
         'User-Agent':
@@ -45,17 +46,21 @@ class LatestMusicUpdatesFinder(scrapy.Spider):
     urllib.request.install_opener(opener)
     chunk_size = 0
     batch = db.batch()
+    singles_dict = dict()
 
     def parse(self, response):
         self.main_response = response
-        for update_tags in response.xpath('//div[@class="home-trend-body"]'):
-            i = 1
-            for update in update_tags.xpath('.//a'):
-                print(i.__str__() + ". " +
-                      update.xpath('.//text()').extract_first().strip())
-                self.updates_links.append(self.base_url + update.xpath('.//@href').extract_first())
-                # print(self.base_url + update.xpath('.//@href').extract_first())
-                i = i + 1
+        i = 1
+        for update_tags in response.xpath('//div[@class="home-trend-body"]/ul/li'):
+            print(i.__str__() + ". " + update_tags.xpath('.//a/text()').extract_first().strip())
+            if "Albums" in update_tags.xpath('.//div[2]/span/text()').extract_first().strip().split():
+                self.db_doc = "new_updates"
+                request = scrapy.Request(
+                    self.base_url + update_tags.xpath('.//a/@href').extract_first(),
+                    callback=self.parseIndividualAlbum)
+                yield request
+            self.updates_links.append(self.base_url + update_tags.xpath('.//a/@href').extract_first())
+            i = i + 1
         # print(response.xpath('//div[@class="home-slider-body"]/figure'))
         for update_tags in response.xpath('//div[@class="home-slider-body"]/figure'):
             for update in update_tags.xpath('.//h3/a'):
@@ -66,14 +71,44 @@ class LatestMusicUpdatesFinder(scrapy.Spider):
                     self.base_url + update.xpath('.//@href').extract_first())
                 # print(self.base_url + update.xpath('.//@href').extract_first())
                 i = i + 1
+        print(i.__str__() + ". " + "Indipop Albums Links Load")
+        i = i + 1
         print(i.__str__() + ". " + "Bollywood Albums Links Load")
+        i = i + 1
+        print(i.__str__() + ". " + "Punjabi Albums Links Load")
+        i = i + 1
+        print(i.__str__() + ". " + "Punjabi Singles Links Load")
         self.updates_choice = int(
             input("Enter Update number to download:")) - 1
-        if self.updates_choice == i-1:
+        if self.updates_choice == i-4:
+            self.db_doc = "indipop_albums"
+            self.albums_base_url = "https://www.djmaza.fun/category/indipop-albums/"
             request = scrapy.Request(
-                self.boll_albums_base_url + 'a',
+                self.albums_base_url + 'a',
                 callback=self.parseBollywoodAlbumPages)
             yield request
+        elif self.updates_choice == i-3:
+            self.db_doc = "bollywood_albums"
+            request = scrapy.Request(
+                self.albums_base_url + 'a',
+                callback=self.parseBollywoodAlbumPages)
+            yield request
+        elif self.updates_choice == i - 2:
+            self.db_doc = "punjabi_albums"
+            self.albums_base_url = "https://www.djmaza.fun/category/punjabi-albums/"
+            request = scrapy.Request(
+                self.albums_base_url + 'a',
+                callback=self.parseBollywoodAlbumPages)
+            yield request
+        elif self.updates_choice == i - 1:
+            self.db_doc = "punjabi_single"
+            self.albums_base_url = "https://www.djmaza.fun/category/punjabi-singles/"
+            print("Starting write to DB")
+            request = scrapy.Request(
+                self.albums_base_url + 'a',
+                callback=self.parseBollywoodAlbumPages)
+            yield request
+            print("Finished write to DB")
         else:
             request = scrapy.Request(
                 self.updates_links[self.updates_choice],
@@ -231,21 +266,25 @@ class LatestMusicUpdatesFinder(scrapy.Spider):
 
     def parseBollywoodAlbumPages(self, response):
         list_pages = response.xpath('//ul[@class="pagination"]/li').extract()
-        total_pages = len(list_pages) - 1
-        # print("Total Pages: " + total_pages.__str__())
+        total_pages = len(list_pages)
         i = 1
-        if total_pages == -1:
-            self.parseArchivePage(response)
-        while i <= total_pages:
+        if total_pages == 0:
+            print("Total Pages: " + total_pages.__str__())
+            # self.parseArchivePage(response)
             request = scrapy.Request(
-                self.boll_albums_base_url + self.curr_char + "?page=" + i.__str__(),
+                self.albums_base_url + self.curr_char ,
+                callback=self.parseArchivePage)
+            yield request
+        while i <= total_pages - 1:
+            request = scrapy.Request(
+                self.albums_base_url + self.curr_char + "?page=" + i.__str__(),
                 callback=self.parseArchivePage)
             yield request
             i = i + 1
         self.curr_char = chr(ord(self.curr_char) + 1)
         if self.curr_char != 'z':
             request = scrapy.Request(
-                self.boll_albums_base_url + self.curr_char,
+                self.albums_base_url + self.curr_char,
                 callback=self.parseBollywoodAlbumPages)
             yield request
         else:
@@ -254,16 +293,22 @@ class LatestMusicUpdatesFinder(scrapy.Spider):
             print("Writting complete........")
 
     def parseArchivePage(self, response):
-
+        print("called parseArchivePage")
         # print(response.xpath('//div[@class="archive-body"]/figure').extract())
         for album in response.xpath('//div[@class="archive-body"]/figure'):
+            print((album.xpath(".//h3/a/text()").extract_first()).strip())
             album_link = (album.xpath(".//h3/a/@href").extract_first()).strip()
-            request = scrapy.Request(
-                self.base_url + album_link,
-                callback=self.parseIndividualAlbum)
-            yield request
+            if self.db_doc != "punjabi_single":
+                request = scrapy.Request(
+                    self.base_url + album_link,
+                    callback=self.parseIndividualAlbum)
+                yield request
+            else:
+                request = scrapy.Request(
+                    self.base_url + album_link,
+                    callback=self.parseSingles)
+                yield request
             album_name = (album.xpath(".//h3/a/text()").extract_first()).strip()
-            # print((album.xpath(".//h3/a/text()").extract_first()).strip())
             self.available_albums_fo.write((album.xpath(".//h3/a/text()").extract_first()).strip() + "\n")
             # album_list_ref = self.db.collection(u'albumslist').document(album_name)
             # self.batch.set(album_list_ref, {u'name': album_name})
@@ -275,7 +320,7 @@ class LatestMusicUpdatesFinder(scrapy.Spider):
     def parseIndividualAlbum(self, response):
         # print("parsing")
         album_name = response.xpath('//div[@class="page-header bg-grey-full top-header"]/h1/text()').extract_first().split('-')[0].strip()
-        album_ref = self.db.collection(u'albums_list3').document(album_name)
+        album_ref = self.db.collection(self.db_doc).document(album_name)
         # self.batch.set(album_ref, {u'album_name': album_name})
         print(album_name)
         album_cover_path = response.xpath('//div[@class="col-sm-5 cover-section"]/img/@src').extract_first()
@@ -302,7 +347,7 @@ class LatestMusicUpdatesFinder(scrapy.Spider):
             # 		  print(track_list_tags.xpath('.//li/div/div/h3'))
             for track in track_list_tags.xpath('.//li'):
                 song_name = track.xpath('.//div/div/h3/a/text()').extract_first().strip()
-                album_songs_ref = self.db.collection(u'albums_list3').document(album_name).collection(u'songs').document(song_name)
+                album_songs_ref = self.db.collection(self.db_doc).document(album_name).collection(u'songs').document(song_name)
                 song_artists = track.xpath('.//div/div/span/a/text()').extract()
                 song_artists = list(map(str.strip, song_artists))
                 song_number = i
@@ -319,11 +364,50 @@ class LatestMusicUpdatesFinder(scrapy.Spider):
                                            u'song_190kbps_link': song_190kbps_link,
                                         u'song_320kbps_link': song_320kbps_link})
                 i = i + 1
-        
+
             self.batch.commit()
             self.batch = self.db.batch()
             self.chunk_size = 0
             print("Writting complete.....")
+
+    def parseSingles(self, response):
+        song_190kbps_link = None
+        song_320kbps_link = None
+        song_name = response.xpath('//div[@class="page-header bg-grey-full top-header"]/h1/text()').extract_first().strip().split('-')[0]
+        song_name = song_name.strip()
+        song_cover_path = response.xpath('//div[@class="col-sm-5 cover-section"]/img/@src').extract_first()
+        songMetaTags = response.xpath('//div[@class="page-meta-body"]/ul/li')
+        try:
+            song_artists = songMetaTags[0].xpath('.//div[2]/a/text()').extract()
+            song_artists = list(map(str.strip, song_artists))
+            song_duration = songMetaTags[-1].xpath('.//div[2]/a/text()').extract_first()
+            # print(response.xpath('//div[@class="col-xs-6 text-center page-down-btns"]').extract())
+            song_190kbps_link = response.xpath('//div[@class="col-xs-6 text-center page-down-btns"]/a/@href').extract()[
+                0]
+            song_320kbps_link = response.xpath('//div[@class="col-xs-6 text-center page-down-btns"]/a/@href').extract()[
+                1]
+        except IndexError:
+            self.log_fo.write("Cannot Find Album name for :" + song_name)
+        # print(song_name)
+        # print(song_artists)
+        # print(song_190kbps_link)
+        # print(song_320kbps_link)
+        # print(song_duration)
+        single_song_detail_dict = {
+            u'song_name': song_name,
+            u'song_artists': song_artists,
+            u'song_190kbps_link': song_190kbps_link,
+            u'song_320kbps_link': song_320kbps_link,
+            u'song_cover_path': song_cover_path,
+            u'song_url': str(response.request.url)
+        }
+        self.singles_dict[song_name] = single_song_detail_dict
+        singles_song_ref = self.db.collection(self.db_doc).document(song_name)
+        self.batch.set(singles_song_ref, self.singles_dict[song_name])
+        self.batch.commit()
+
+    def close(spider, reason):
+        print("Write complete")
 
 # process = CrawlerProcess({
 #     'USER_AGENT':
