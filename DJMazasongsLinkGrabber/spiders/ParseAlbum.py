@@ -9,6 +9,9 @@ import os
 class ParseAlbum:
     # cred = credentials.Certificate(os.getcwd() + "\\serviceAccountKey.json")
     # firebase_admin.initialize_app(cred)
+    cred = credentials.Certificate(os.getcwd() + "\\serviceAccountKey.json")
+    firebase_admin.initialize_app(cred)
+    os.environ['GOOGLE_APPLICATION_CREDENTIALS'] = os.getcwd()
     db = firestore.Client()
     db_doc = "temp"
     batch = db.batch()
