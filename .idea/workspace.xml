@@ -37,17 +37,17 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="setup.py" pinned="false" current-in-tab="false">
+      <file leaf-file-name="setup.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/setup.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="17">
-              <caret line="1" column="0" lean-forward="true" selection-start-line="1" selection-start-column="0" selection-end-line="1" selection-end-column="0" />
+            <state relative-caret-position="170">
+              <caret line="10" column="5" lean-forward="false" selection-start-line="10" selection-start-column="5" selection-end-line="10" selection-end-column="5" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="settings.py" pinned="false" current-in-tab="true">
+      <file leaf-file-name="settings.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/settings.py">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="0">
@@ -169,8 +169,8 @@
         <option value="$PROJECT_DIR$/DJMazasongsLinkGrabber/spiders/ScrapeDJMazaMusicUpdates.py" />
         <option value="$PROJECT_DIR$/DJMazasongsLinkGrabber/spiders/LatestMusicUpdatesFinder.py" />
         <option value="$PROJECT_DIR$/DJMazasongsLinkGrabber/spiders/ParseAlbum.py" />
-        <option value="$PROJECT_DIR$/setup.py" />
         <option value="$PROJECT_DIR$/settings.py" />
+        <option value="$PROJECT_DIR$/setup.py" />
       </list>
     </option>
   </component>
@@ -740,18 +740,18 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/setup.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="17">
-          <caret line="1" column="0" lean-forward="true" selection-start-line="1" selection-start-column="0" selection-end-line="1" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/settings.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
           <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/setup.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="170">
+          <caret line="10" column="5" lean-forward="false" selection-start-line="10" selection-start-column="5" selection-end-line="10" selection-end-column="5" />
           <folding />
         </state>
       </provider>
