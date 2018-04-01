@@ -9,7 +9,8 @@ import os
 class ParseAlbum:
     # cred = credentials.Certificate(os.getcwd() + "\\serviceAccountKey.json")
     # firebase_admin.initialize_app(cred)
-    cred = credentials.Certificate("/app/__main__.egg/DJMazasongsLinkGrabber/serviceAccountKey.json")
+    PROJECT_ROOT = os.path.abspath(os.path.dirname(__file__))
+    cred = credentials.Certificate(os.path.join(PROJECT_ROOT,'../serviceAccountKey.json'))
     firebase_admin.initialize_app(cred)
     os.environ['GOOGLE_APPLICATION_CREDENTIALS'] = os.getcwd()
     db = firestore.Client()
