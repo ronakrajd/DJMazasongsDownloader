@@ -2,6 +2,7 @@ import scrapy
 import string
 import urllib
 from urllib.request import urlopen, urlretrieve, urlparse, Request
+from urllib.request import urlopen, urlretrieve, urlparse, Request
 from urllib.parse import unquote
 import os
 from scrapy.crawler import CrawlerProcess

@@ -1,2 +1,2 @@
 requests==2.18.4
-urllib.request==3.4.3
+urllib]==3.4.3

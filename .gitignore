@@ -3,3 +3,4 @@ DJMazasongsLinkGrabber/serviceAccountKey.json
 *.json
 *.log
 *.log
+DJMazasongsLinkGrabber/spiders/LatestMusicUpdatesFinder.py
