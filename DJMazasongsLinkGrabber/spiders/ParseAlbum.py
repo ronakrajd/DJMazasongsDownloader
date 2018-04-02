@@ -15,7 +15,7 @@ class ParseAlbum:
     # firebase_admin.initialize_app(cred)
     PROJECT_ROOT = os.path.abspath(os.path.dirname(__file__))
     data = pkgutil.get_data("DJMazasongssLinkGrabber", "resources/serviceAccountKey.json")
-    pkgutil.get_data()
+    # pkgutil.get_data()
     cred = credentials.Certificate("\\resources\\serviceAccountKey.json")
     firebase_admin.initialize_app(cred)
     os.environ['GOOGLE_APPLICATION_CREDENTIALS'] = os.getcwd()
