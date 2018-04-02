@@ -16,7 +16,7 @@ class ParseAlbum:
     #ROOT_DIR = os.path.dirname(os.path.abspath(__file__)) # This is your Project Root
     #CONFIG_PATH = os.path.join(ROOT_DIR, 'configuration.conf')
     #PROJECT_ROOT = os.path.abspath(os.path.dirname(__file__))
-    cred = credentials.Certificate('serviceAccountKey.json')
+    cred = credentials.Certificate(os.path.realpath(__file__)+'/serviceAccountKey.json')
     firebase_admin.initialize_app(cred)
     os.environ['GOOGLE_APPLICATION_CREDENTIALS'] = os.getcwd()
     db = firestore.Client()
