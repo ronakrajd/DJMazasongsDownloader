@@ -13,10 +13,10 @@ import pkgutil
 class ParseAlbum:
     # cred = credentials.Certificate(os.getcwd() + "\\serviceAccountKey.json")
     # firebase_admin.initialize_app(cred)
-    ROOT_DIR = os.path.dirname(os.path.abspath(__file__)) # This is your Project Root
+    #ROOT_DIR = os.path.dirname(os.path.abspath(__file__)) # This is your Project Root
     #CONFIG_PATH = os.path.join(ROOT_DIR, 'configuration.conf')
     #PROJECT_ROOT = os.path.abspath(os.path.dirname(__file__))
-    cred = credentials.Certificate(os.path.join(ROOT_DIR, 'serviceAccountKey.json'))
+    cred = credentials.Certificate('serviceAccountKey.json')
     firebase_admin.initialize_app(cred)
     os.environ['GOOGLE_APPLICATION_CREDENTIALS'] = os.getcwd()
     db = firestore.Client()
