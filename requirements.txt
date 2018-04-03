@@ -1,5 +1,3 @@
 requests==2.18.4
 googleapis-common-protos
 firebase_admin
-codecs
-shelves
