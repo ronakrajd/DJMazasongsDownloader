@@ -115,7 +115,7 @@
         <entry file="file://$PROJECT_DIR$/DJMazasongsLinkGrabber/spiders/ParseAlbum.py">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="189">
-              <caret line="23" column="124" lean-forward="false" selection-start-line="23" selection-start-column="124" selection-end-line="23" selection-end-column="124" />
+              <caret line="23" column="55" lean-forward="false" selection-start-line="23" selection-start-column="55" selection-end-line="23" selection-end-column="55" />
               <folding>
                 <element signature="e#0#13#0" expanded="true" />
               </folding>
@@ -856,7 +856,7 @@
     <entry file="file://$PROJECT_DIR$/DJMazasongsLinkGrabber/spiders/ParseAlbum.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="189">
-          <caret line="23" column="124" lean-forward="false" selection-start-line="23" selection-start-column="124" selection-end-line="23" selection-end-column="124" />
+          <caret line="23" column="55" lean-forward="false" selection-start-line="23" selection-start-column="55" selection-end-line="23" selection-end-column="55" />
           <folding>
             <element signature="e#0#13#0" expanded="true" />
           </folding>
