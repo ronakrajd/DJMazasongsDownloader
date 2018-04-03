@@ -13,69 +13,15 @@ import codecs
 import shelve
 
 class ParseAlbum:
-    formatted_item = {
-        "data": [
-            {"firstLetter": "A",
-             "remaining": [
-                 {
-                     "secondLetter": "a",
-                     "ID": [
-                         {"id": "Aa123", "listOfItems": ["ABC123", "ASD100"]},
-                         {"id": "Aa100", "listOfItems": ["ABC123", "COD101"]}
-                     ]
-                 },
-                 {
-                     "secondLetter": "b",
-                     "ID": [
-                         {"id": "Ab100", "listOfItems": ["ABC123", "ASD100"]}
-                     ]
-                 }
-             ]
-             },
-            {"firstLetter": "B",
-             "remaining": [
-                 {
-                     "secondLetter": "a",
-                     "ID": [
-                         {"id": "Ba106", "listOfItems": ["AUD123", "CML101"]}
-                     ]
-                 },
-                 {
-                     "secondLetter": "b",
-                     "ID": [
-                         {"id": "Bb153", "listOfItems": ["AER113", "ASD100"]},
-                         {"id": "Bb100", "listOfItems": ["ATC123", "ASD500"]}
-                     ]
-                 }
-             ]
-             }
-        ]
-    }
-
-    ###
-    # JSON
-
-    # *** Store
-
-    output = json.dumps(dict(formatted_item), sort_keys=True, indent=4, separators=(',', ': '))
-    json_file_path = 'temp.json'
-    with codecs.open(json_file_path, 'wb', encoding='utf8') as file:
-        file.write(output)
-
-    # *** Read
-
-    with open(json_file_path) as json_file:
-        json_data = json.load(json_file)
 
     # cred = credentials.Certificate(os.getcwd() + "\\serviceAccountKey.json")
     # firebase_admin.initialize_app(cred)
     PROJECT_ROOT = os.path.abspath(os.path.dirname(__file__))
-    data = pkgutil.get_importer("resources/serviceAcoountKey.json")
+    data = os.path.join(os.path.dirname(__file__), '../resources/serviceAccountKey.json')
     # pkgutil.get_data()
-    firestore_client = firestore.Client.
     cred = credentials.Certificate(data)
     firebase_admin.initialize_app(cred)
-    os.environ['GOOGLE_APPLICATION_CREDENTIALS'] = os.getcwd()
+    # os.environ['GOOGLE_APPLICATION_CREDENTIALS'] = os.getcwd()
     db = firestore.Client()
     db_doc = "temp"
     batch = db.batch()
