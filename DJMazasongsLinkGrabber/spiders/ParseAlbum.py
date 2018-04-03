@@ -21,7 +21,7 @@ class ParseAlbum:
     # pkgutil.get_data()
     cred = credentials.Certificate(data)
     firebase_admin.initialize_app(cred)
-    os.environ['GOOGLE_APPLICATION_CREDENTIALS'] = os.path.join(os.path.dirname(__file__), 'resources')
+    os.environ['GOOGLE_APPLICATION_CREDENTIALS'] = os.path.join(os.path.dirname(__file__), 'resources/serviceAccountKey.json')
     db = firestore.Client()
     db_doc = "temp"
     batch = db.batch()
