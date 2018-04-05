@@ -5,22 +5,15 @@ import firebase_admin
 from firebase_admin import credentials
 from google.cloud import firestore
 import os
-import json
-from google.oauth2 import service_account
-import pkgutil
-from google.cloud import firestore
-import codecs
-import shelve
+import datetime
 
 class ParseAlbum:
-
     # cred = credentials.Certificate(os.getcwd() + "\\serviceAccountKey.json")
     # firebase_admin.initialize_app(cred)
-    PROJECT_ROOT = os.path.abspath(os.path.dirname(__file__))
     data = os.path.join(os.path.dirname(__file__), '../resources/serviceAccountKey.json')
-    # pkgutil.get_data()
     cred = credentials.Certificate(data)
     firebase_admin.initialize_app(cred)
+    # firebase_admin.initialize_app("\\resources\\serviceAccountKey.json")
     os.environ['GOOGLE_APPLICATION_CREDENTIALS'] = data
     db = firestore.Client()
     db_doc = "temp"
@@ -48,7 +41,8 @@ class ParseAlbum:
         self.batch.set(album_ref, {u'album_name': album_name,
                                    u'album_cover_path': album_cover_path,
                                    u'album_zip_190_link': zip_dwnld_190_link,
-                                   u'album_zip_320_link': zip_dwnld_320_link})
+                                   u'album_zip_320_link': zip_dwnld_320_link,
+                                   u'create_ts': datetime.datetime.now()})
         # self.chunk_size = self.chunk_size + 4
         print(album_cover_path)
         print(str(response.request.url))
@@ -74,7 +68,8 @@ class ParseAlbum:
                                            u'song_name': song_name,
                                            u'song_artists': song_artists,
                                            u'song_190kbps_link': song_190kbps_link,
-                                        u'song_320kbps_link': song_320kbps_link})
+                                        u'song_320kbps_link': song_320kbps_link,
+                                                 u'create_ts': datetime.datetime.now()})
                 i = i + 1
 
             self.batch.commit()
