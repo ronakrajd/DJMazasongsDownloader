@@ -8,8 +8,8 @@ from scrapy.crawler import CrawlerProcess
 
 
 class LatestMusicUpdatesFinder(scrapy.Spider):
-	start_urls = ['http://www.djmaza.fun']
-	base_url = "http://www.djmaza.fun"
+	start_urls = ['http://www.djmaza.ms']
+	base_url = "http://www.djmaza.ms"
 	name = "LatestMusicUpdatesFinder"
 	headers = {
 	    'User-Agent':
