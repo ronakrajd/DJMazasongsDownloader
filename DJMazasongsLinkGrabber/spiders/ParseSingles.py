@@ -24,7 +24,7 @@ class ParseSingles:
     def parseSingles(self, response):
         song_190kbps_link = None
         song_320kbps_link = None
-        if response.xpath('//div[@class="page-meta"]/div[@class="page-meta-header bg-grey-full"]/h3/text()').extract_first().strip().contains("Album"):
+        if "Album" in response.xpath('//div[@class="page-meta"]/div[@class="page-meta-header bg-grey-full"]/h3/text()').extract_first().strip():
             parseAlbum = ParseAlbum("new_updates")
             parseAlbum.parseIndividualAlbum(parseAlbum, response)
             return
