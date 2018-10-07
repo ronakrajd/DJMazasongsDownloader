@@ -26,7 +26,7 @@ class ParseSingles:
         song_320kbps_link = None
         if "Album" in response.xpath('//div[@class="page-meta"]/div[@class="page-meta-header bg-grey-full"]/h3/text()').extract_first().strip():
             parseAlbum = ParseAlbum("new_updates")
-            parseAlbum.parseIndividualAlbum(parseAlbum, response)
+            parseAlbum.parseIndividualAlbum(response)
             return
         song_name = response.xpath('//div[@class="page-header bg-grey-full top-header"]/h1/text()').extract_first().strip().split('-')[0]
         song_name = song_name.strip()
