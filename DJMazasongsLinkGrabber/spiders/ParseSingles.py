@@ -4,7 +4,11 @@ from scrapy.crawler import CrawlerProcess
 import firebase_admin
 from firebase_admin import credentials
 from google.cloud import firestore
+
 import os
+
+from DJMazasongsLinkGrabber.spiders.ParseAlbum import ParseAlbum
+
 
 class ParseSingles:
     # cred = credentials.Certificate(os.getcwd() + "\\serviceAccountKey.json")
@@ -20,6 +24,10 @@ class ParseSingles:
     def parseSingles(self, response):
         song_190kbps_link = None
         song_320kbps_link = None
+        if response.xpath('//div[@class="page-meta"]/div[@class="page-meta-header bg-grey-full"]/h3/text').extract_first().strip().split().contains("Album"):
+            parseAlbum = ParseAlbum("new_updates")
+            parseAlbum.parseIndividualAlbum(parseAlbum, response)
+            return
         song_name = response.xpath('//div[@class="page-header bg-grey-full top-header"]/h1/text()').extract_first().strip().split('-')[0]
         song_name = song_name.strip()
         song_cover_path = response.xpath('//div[@class="col-sm-5 cover-section"]/img/@src').extract_first()
