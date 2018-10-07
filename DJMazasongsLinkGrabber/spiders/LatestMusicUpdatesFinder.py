@@ -16,9 +16,9 @@
 # from google.cloud import firestore
 #
 # class LatestMusicUpdatesFinder(scrapy.Spider):
-#     # cred = credentials.Certificate(os.getcwd() + "\\serviceAccountKey.json")
-#     # firebase_admin.initialize_app(cred)
-#     # db = firestore.Client()
+#     cred = credentials.Certificate(os.getcwd() + "\\DJMazasongsLinkGrabber\\resources\\serviceAccountKey.json")
+#     firebase_admin.initialize_app(cred)
+#     db = firestore.Client()
 #     start_urls = ['http://www.djmaza.fun']
 #     base_url = "http://www.djmaza.fun"
 #     albums_base_url = "https://www.djmaza.fun/category/bollywood-albums/"

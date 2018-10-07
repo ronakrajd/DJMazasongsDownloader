@@ -12,8 +12,8 @@ class ScrapeDJMazaMusicUpdates(scrapy.Spider):
     # cred = credentials.Certificate(os.getcwd() + "\\serviceAccountKey.json")
     # firebase_admin.initialize_app(cred)
     # db = firestore.Client()
-    start_urls = ['http://www.djmaza.fun']
-    base_url = "http://www.djmaza.fun"
+    start_urls = ['http://www.djmaza.ms']
+    base_url = "http://www.djmaza.ms"
     name = "ScrapeDJMazaMusicUpdates"
     headers = {
         'User-Agent':

@@ -18,6 +18,7 @@ class ParseAlbum:
     db = firestore.Client()
     db_doc = "temp"
     batch = db.batch()
+    album_list = list()
 
     def __init__(self, db_doc):
         self.db_doc = db_doc
@@ -38,11 +39,13 @@ class ParseAlbum:
         except:
             zip_dwnld_190_link = ""
             zip_dwnld_320_link = ""
-        self.batch.set(album_ref, {u'album_name': album_name,
-                                   u'album_cover_path': album_cover_path,
-                                   u'album_zip_190_link': zip_dwnld_190_link,
-                                   u'album_zip_320_link': zip_dwnld_320_link,
-                                   u'create_ts': datetime.datetime.now()})
+        album_dict = {u'album_name': album_name,
+                       u'album_cover_path': album_cover_path,
+                       u'album_zip_190_link': zip_dwnld_190_link,
+                       u'album_zip_320_link': zip_dwnld_320_link,
+                       u'create_ts': datetime.datetime.now()}
+        self.album_list.append(album_dict)
+        self.batch.set(album_ref, album_dict)
         # self.chunk_size = self.chunk_size + 4
         print(album_cover_path)
         print(str(response.request.url))
