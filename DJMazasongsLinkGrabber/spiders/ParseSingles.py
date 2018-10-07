@@ -4,7 +4,7 @@ from scrapy.crawler import CrawlerProcess
 import firebase_admin
 from firebase_admin import credentials
 from google.cloud import firestore
-
+import datetime
 import os
 
 from DJMazasongsLinkGrabber.spiders.ParseAlbum import ParseAlbum
@@ -56,6 +56,7 @@ class ParseSingles:
             u'song_320kbps_link': song_320kbps_link,
             u'song_cover_path': song_cover_path,
             u'song_url': str(response.request.url)
+            u'create_ts': datetime.datetime.now()}
         }
         self.singles_dict[song_name] = single_song_detail_dict
         singles_song_ref = self.db.collection(self.db_doc).document(song_name)
