@@ -59,6 +59,6 @@ class ParseSingles:
             u'create_ts': datetime.datetime.now()
         }
         self.singles_dict[song_name] = single_song_detail_dict
-        singles_song_ref = self.db.collection(self.db_doc).document("singles").document(song_name)
+        singles_song_ref = self.db.collection(self.db_doc).collection(u"singles").document(song_name)
         self.batch.set(singles_song_ref, self.singles_dict[song_name])
         self.batch.commit()

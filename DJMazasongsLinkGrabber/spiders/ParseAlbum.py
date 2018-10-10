@@ -26,7 +26,7 @@ class ParseAlbum:
     def parseIndividualAlbum(self, response):
         # print("parsing")
         album_name = response.xpath('//div[@class="page-header bg-grey-full top-header"]/h1/text()').extract_first().split('-')[0].strip()
-        album_ref = self.db.collection(self.db_doc).document("albums").document(album_name)
+        album_ref = self.db.collection(self.db_doc).collection(u"albums").document(album_name)
         # self.batch.set(album_ref, {u'album_name': album_name})
         print(album_name)
         album_cover_path = response.xpath('//div[@class="col-sm-5 cover-section"]/img/@src').extract_first()
