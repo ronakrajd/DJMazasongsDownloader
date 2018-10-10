@@ -55,7 +55,7 @@ class ParseSingles:
             u'song_190kbps_link': song_190kbps_link,
             u'song_320kbps_link': song_320kbps_link,
             u'song_cover_path': song_cover_path,
-            u'song_url': str(response.request.url)
+            u'song_url': str(response.request.url),
             u'create_ts': datetime.datetime.now()}
         }
         self.singles_dict[song_name] = single_song_detail_dict
